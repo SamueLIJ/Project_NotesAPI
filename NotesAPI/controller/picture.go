@@ -69,6 +69,15 @@ func CreatePictureController(c echo.Context) error {
 		return err
 	}
 	defer dst.Close()
+	
+		// this is path which  we want to store the file
+	// f, err := os.OpenFile("path/to/save/image/"+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+	// if err != nil {
+	// 	return "",err
+	// }
+	// defer f.Close()
+	// io.Copy(f, file)
+	
 
 	if _, err = io.Copy(dst, src); err != nil {
 		return err
