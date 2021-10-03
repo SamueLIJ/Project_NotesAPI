@@ -50,7 +50,7 @@ func UpdateUserByID(id string, user model.User) {
 func GetDetailUser(userId int) (interface{}, error) {
 	var user model.User
 
-	if e := config.DB.Find(&user, userId).Error; e != nil {
+	if e := config.DB.Where("deleted_at is null").Find(&user, userId).Error; e != nil {
 		return nil, e
 	}
 	return user, nil
