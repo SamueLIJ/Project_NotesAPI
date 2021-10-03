@@ -55,6 +55,10 @@ func CreateToken(userId int) (string, error) {
 func AuthJWT(hf echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		authorizationFromHeader := c.Request().Header.Get("authorization")
+		//if authorizationFromHeader != nil{
+
+		// }
+		
 		tokenString := strings.ReplaceAll(authorizationFromHeader, "Bearer ", "")
 
 		claims := jwt.MapClaims{}
