@@ -4,8 +4,8 @@ import (
 	"NotesAPI/lib/database"
 	"NotesAPI/model"
 	"net/http"
+	"strconv"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 )
 
@@ -17,20 +17,20 @@ func GetAllUsersController(c echo.Context) error {
 	})
 }
 
-func GetUserByIDController(c echo.Context) error {
-	id := c.Param("id")
-	user := database.GetUserByID(id)
-	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetUserByIDController",
-		"data":    user,
-	})
-}
+// func GetUserByIDController(c echo.Context) error {
+// 	id := c.Param("id")
+// 	user := database.GetUserByID(id)
+// 	return c.JSON(http.StatusOK, echo.Map{
+// 		"message": "GetUserByIDController",
+// 		"data":    user,
+// 	})
+// }
 
 func DeleteUserByIDController(c echo.Context) error {
 	id := c.Param("id")
 	database.DeleteUserByID(id)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "DeleteUserByIDController",
+		"message": "User Successfully Deleted",
 	})
 }
 
@@ -46,8 +46,7 @@ func UpdateUserByIDController(c echo.Context) error {
 	}
 	database.UpdateUserByID(id, user)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetUserByIDController",
-		"data":    user,
+		"message": "User Successfully Updated",
 	})
 }
 
@@ -61,6 +60,7 @@ func CreateUserController(c echo.Context) error {
 	}
 
 	newUser = database.CreateUser(newUser)
+	newUser.Password = ""
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "CreateUserController",
 		"data":    newUser,
@@ -68,59 +68,59 @@ func CreateUserController(c echo.Context) error {
 
 }
 
+// func LoginUserController(c echo.Context) error {
+// 	var user model.User
+
+// 	isValid := database.IsValid(user.Email, user.Name)
+// 	if !isValid {
+// 		return c.String(http.StatusBadRequest, "Email atau Password Salah")
+// 	}
+
+// 	claims := jwt.MapClaims{}
+
+// 	claims["userID"] = user.Email
+// 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+// 	tokenString, err := token.SignedString([]byte("legal"))
+
+// 	if err != nil {
+// 		return c.String(http.StatusInternalServerError, err.Error())
+// 	}
+
+// 	return c.String(http.StatusOK, tokenString)
+// }
+
 func LoginUserController(c echo.Context) error {
-	var user model.User
+	user := model.User{}
+	c.Bind(&user)
 
-	isValid := database.IsValid(user.Email, user.Name)
-	if !isValid {
-		return c.String(http.StatusBadRequest, "Email atau Password Salah")
-	}
-
-	claims := jwt.MapClaims{}
-
-	claims["userID"] = user.Email
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString([]byte("legal"))
-
+	token, err := database.LoginUser(&user)
 	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	return c.String(http.StatusOK, tokenString)
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "Login Success",
+		"token":  token,
+	})
+
 }
 
-// func LoginUserController(c echo.Context) error {
-// 	user := model.User{}
-// 	c.Bind(&user)
+func GetUserByIDController(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
 
-// 	users, err := database.LoginUser(&user)
-// 	if err != nil {
-// 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-// 	}
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
 
-// 	return c.JSON(http.StatusOK, map[string]interface{}{
-// 		"status": "login success",
-// 		"user":   users,
-// 	})
+	users, err := database.GetDetailUser(id)
 
-// }
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
 
-// func GetUserDetailController(c echo.Context) error{
-// 	id,err:=strconv.Atoi(c.Param("id"))
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "login success",
+		"user":   users,
+	})
 
-// 	if err != nil {
-// 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-// 	}
-
-// 	users, err := database.GetDetailUser(id)
-
-// 	if err != nil {
-// 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-// 	}
-
-// 	return c.JSON(http.StatusOK, map[string]interface{}{
-// 		"status": "login success",
-// 		"user":   users,
-// 	})
-
-// }
+}

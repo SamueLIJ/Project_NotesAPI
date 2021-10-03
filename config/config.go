@@ -51,9 +51,9 @@ func InitMigration() {
 	DB.AutoMigrate(
 		&model.User{},
 		&model.Note{},
-		// &model.Reminder{},
 		&model.Label{},
 		&model.Reminder{},
+		&model.Picture{},
 	)
 
 }

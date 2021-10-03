@@ -7,9 +7,9 @@ import (
 )
 
 func NewLabel(e *echo.Echo) {
-	e.GET("/notes/labels", controller.GetAllLabelsController)
-	e.POST("/notes/labels", controller.CreateLabelController)
-	e.GET("/notes/labels/:id", controller.GetLabelByIDController)
-	e.DELETE("/notes/labels/:id", controller.DeleteLabelByIDController)
-	e.PUT("/notes/labels/:id", controller.UpdateLabelByIDController)
+	e.GET("/labels", controller.GetAllLabelsController)
+	e.POST("/labels", controller.CreateLabelController)
+	e.GET("/labels/:id", controller.GetLabelByIDController)
+	e.DELETE("/labels/:id", controller.DeleteLabelByIDController)
+	e.PUT("/labels/:id", controller.UpdateLabelByIDController)
 }

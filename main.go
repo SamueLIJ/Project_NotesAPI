@@ -19,5 +19,6 @@ func main() {
 	route.NewNotes(e)
 	route.NewLabel(e)
 	route.NewReminders(e)
+	route.NewPictures(e)
 	e.Start(":8080")
 }

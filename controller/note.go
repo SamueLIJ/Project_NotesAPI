@@ -4,6 +4,8 @@ import (
 	"NotesAPI/lib/database"
 	"NotesAPI/model"
 	"net/http"
+	"strconv"
+
 	"github.com/labstack/echo"
 )
 
@@ -16,11 +18,20 @@ func GetAllNotesController(c echo.Context) error {
 }
 
 func GetNoteByIDController(c echo.Context) error {
-	id := c.Param("id")
-	note := database.GetNotesByID(id)
-	return c.JSON(http.StatusOK, echo.Map{
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	notes, err := database.GetNotesByID(id)
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "GetNoteByIDController",
-		"data":    note,
+		"data":    notes,
 	})
 }
 
@@ -28,7 +39,7 @@ func DeleteNoteByIDController(c echo.Context) error {
 	id := c.Param("id")
 	database.DeleteNoteByID(id)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "DeleteNoteByIDController",
+		"message": "Note Successfully Deleted",
 	})
 }
 
@@ -44,8 +55,7 @@ func UpdateNoteByIDController(c echo.Context) error {
 	}
 	database.UpdateNoteByID(id, note)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetNoteByIDController",
-		"data":    note,
+		"message": "Note Successfully Updated",
 	})
 }
 
@@ -61,6 +71,6 @@ func CreateNoteController(c echo.Context) error {
 	newNote = database.CreateNote(newNote)
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "CreateNoteController",
-		"noteID":    newNote.ID,
+		"noteID":  newNote.ID,
 	})
 }

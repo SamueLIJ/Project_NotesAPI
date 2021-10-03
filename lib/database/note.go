@@ -12,22 +12,24 @@ func GetNotes() []model.Note {
 	return Notes
 }
 
-func GetNotesByID(id string) model.Note {
+func GetNotesByID(noteId int) (interface{}, error) {
 	var note model.Note
-	config.DB.Where("id = ?", id).Find(&note)
-	return note
+	if e := config.DB.Find(&note, noteId).Error; e != nil {
+		return nil, e
+	}
+	return note, nil
 }
 
 func CreateNote(note model.Note) model.Note {
 	config.DB.Create(&note)
 	for _, label := range note.Labels {
-	  err := config.DB.Debug().Raw("insert into notelabels values(?)", label.ID).Error
-	  if err != nil {
-		fmt.Println(err)
-	  }
+		err := config.DB.Debug().Raw("insert into notelabels values(?)", label.ID).Error
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 	return note
-  }
+}
 
 func DeleteNoteByID(id string) {
 	var note model.Note

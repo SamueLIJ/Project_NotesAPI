@@ -29,7 +29,7 @@ func DeleteReminderByIDController(c echo.Context) error {
 	id := c.Param("id")
 	database.DeleteReminderByID(id)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "DeleteReminderByIDController",
+		"message": "Reminder Successfully Deleted",
 	})
 }
 
@@ -45,8 +45,7 @@ func UpdateReminderByIDController(c echo.Context) error {
 	}
 	database.UpdateReminderByID(id, reminder)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetReminderByIDController",
-		"data":    reminder,
+		"message": "Reminder Successfully Updated",
 	})
 }
 
