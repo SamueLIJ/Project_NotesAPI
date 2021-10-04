@@ -12,7 +12,7 @@ import (
 func GetAllUsersController(c echo.Context) error {
 	users := database.GetUsers()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetAllUsersController",
+		"message": "Get all users",
 		"data":    users,
 	})
 }
@@ -29,6 +29,7 @@ func GetAllUsersController(c echo.Context) error {
 func DeleteUserByIDController(c echo.Context) error {
 	id := c.Param("id")
 	database.DeleteUserByID(id)
+
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "User Successfully Deleted",
 	})
@@ -40,7 +41,7 @@ func UpdateUserByIDController(c echo.Context) error {
 	var user model.User
 	if err := c.Bind(&user); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateUserController",
+			"message": "Fail to update user",
 			"error":   err.Error(),
 		})
 	}
@@ -54,7 +55,7 @@ func CreateUserController(c echo.Context) error {
 	var newUser model.User
 	if err := c.Bind(&newUser); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateUserController",
+			"message": "Fail to create user",
 			"error":   err.Error(),
 		})
 	}
@@ -62,7 +63,7 @@ func CreateUserController(c echo.Context) error {
 	newUser = database.CreateUser(newUser)
 	newUser.Password = ""
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "CreateUserController",
+		"message": "User successfully created",
 		"data":    newUser,
 	})
 
@@ -119,7 +120,7 @@ func GetUserByIDController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "login success",
+		"status": "Login Success",
 		"user":   users,
 	})
 

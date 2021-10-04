@@ -13,7 +13,7 @@ type Note struct {
 	Content      string      `json:"content" form:"content"`
 	Status       *string     `json:"status" form:"status"`
 	Archive_date *time.Time  `json:"archive_date" form:"archive_date"`
-	Audiofile    *string     `json:"audiofile"`
+	Audiofile    *string     `json:"audiofile" form:"audio_file"`
 	Labels       []Label     `gorm:"many2many:notelabels" json:"labels,omitempty"`
 	Reminders    []*Reminder `json:"reminder"`
 	Pictures     []*Picture  `json:"picture"`
