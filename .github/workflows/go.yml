@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull samueljordan/notes-api; 
-            docker rm -f notes-api; 
+            docker pull samueljordan/notes-api; \
+            docker rm -f notes-api; \
             docker run -d --network host --name notes-api samueljordan/notes-api
   
