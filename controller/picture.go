@@ -94,7 +94,7 @@ func CreatePictureController(c echo.Context) error {
 
 	newPicture = database.CreatePicture(newPicture)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Picture Successfully Created",
+		"message": "Picture Successfully Uploaded",
 		"data":    newPicture,
 	})
 }
