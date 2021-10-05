@@ -9,7 +9,7 @@ import (
 
 func GetNotes() []model.Note {
 	var Notes []model.Note
-	config.DB.Debug().Preload("Labels").Where("deleted_at is null").Find(&Notes)
+	config.DB.Debug().Preload("Labels").Preload("Pictures").Where("deleted_at is null").Find(&Notes)
 	return Notes
 }
 
