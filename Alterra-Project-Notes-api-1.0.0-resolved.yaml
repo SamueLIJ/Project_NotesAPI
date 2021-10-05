@@ -1,0 +1,889 @@
+---
+swagger: "2.0"
+info:
+  description: This is a simple API for Notes App
+  version: 1.0.0
+  title: Simple Notes API
+  contact:
+    email: you@your-company.com
+host: virtserver.swaggerhub.com
+basePath: /Alterra-Project/Notes-api/1.0.0
+tags:
+- name: Users
+  description: API for user informations
+- name: Notes
+  description: API for user notes informations
+- name: Labels
+  description: API for user labels informations
+- name: Reminders
+  description: API for user reminders informations
+- name: Pictures
+  description: API for saving user pictures
+- name: Dictionary
+  description: Consuming dictionary open API to display word meaning
+schemes:
+- https
+paths:
+  /users:
+    get:
+      tags:
+      - Users
+      summary: Get all users
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Display all users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - Users
+      summary: Register new user
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: Create new user
+        required: true
+        schema:
+          $ref: '#/definitions/user'
+      responses:
+        "200":
+          description: User successfully created
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        "400":
+          description: bad input parameter
+  /users/login:
+    post:
+      tags:
+      - Users
+      summary: Login user will create token
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: Input email and password to generate token
+        required: true
+        schema:
+          $ref: '#/definitions/user_1'
+      responses:
+        "200":
+          description: User successfully created
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        "400":
+          description: bad input parameter
+  /users/{id}:
+    get:
+      tags:
+      - Users
+      summary: Get specific user information by putting token
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input user id
+        required: true
+        type: integer
+      - name: Authorization
+        in: formData
+        description: Input "Bearer" first then space one time, then input the token
+        required: false
+        type: string
+      responses:
+        "200":
+          description: User successfully created
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        "403":
+          description: forbidden
+    put:
+      tags:
+      - Users
+      summary: Update specific user data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input user id to update user data
+        required: true
+        type: integer
+      - in: body
+        name: user
+        description: Input user data that want to update
+        required: true
+        schema:
+          $ref: '#/definitions/user_2'
+      responses:
+        "200":
+          description: User successfully updated
+          schema:
+            $ref: '#/definitions/inline_response_200_1'
+        "400":
+          description: invalid id/name/email/password supplied
+    delete:
+      tags:
+      - Users
+      summary: Delete specific user data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input user id to delete the user
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: User successfully deleted
+          schema:
+            $ref: '#/definitions/inline_response_200_2'
+        "400":
+          description: bad input parameter / invalid id supplied
+  /notes:
+    get:
+      tags:
+      - Notes
+      summary: See all notes
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Display all notes
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Note'
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - Notes
+      summary: Register new note
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: note
+        description: Create new note
+        required: true
+        schema:
+          $ref: '#/definitions/note'
+      responses:
+        "200":
+          description: Note successfully created
+          schema:
+            $ref: '#/definitions/inline_response_200_3'
+        "400":
+          description: bad input notes data
+  /notes/{id}:
+    get:
+      tags:
+      - Notes
+      summary: Get specific note information by putting token
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input note id
+        required: true
+        type: integer
+      - name: Authorization
+        in: formData
+        description: Input "Bearer" first then space one time, then input the token
+        required: false
+        type: string
+      responses:
+        "200":
+          description: Dsiplay note
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Note'
+        "403":
+          description: forbidden
+    put:
+      tags:
+      - Notes
+      summary: Update specific note data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input note id
+        required: true
+        type: integer
+      - in: body
+        name: user
+        description: Input note data that want to update
+        required: true
+        schema:
+          $ref: '#/definitions/user_3'
+      responses:
+        "200":
+          description: Note successfully updated
+          schema:
+            $ref: '#/definitions/inline_response_200_1'
+        "400":
+          description: invalid data supplied
+    delete:
+      tags:
+      - Notes
+      summary: Delete specific note data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input note id to delete the note
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Note successfully deleted
+          schema:
+            $ref: '#/definitions/inline_response_200_4'
+        "400":
+          description: bad input parameter / invalid id supplied
+  /labels:
+    get:
+      tags:
+      - Labels
+      summary: See all labels
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Display all labels
+          schema:
+            $ref: '#/definitions/inline_response_200_5'
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - Labels
+      summary: Register new label
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: label
+        description: Create new label
+        required: true
+        schema:
+          $ref: '#/definitions/label'
+      responses:
+        "200":
+          description: Label successfully created
+          schema:
+            $ref: '#/definitions/inline_response_200_1'
+        "400":
+          description: bad input label data
+  /labels/{id}:
+    get:
+      tags:
+      - Labels
+      summary: Get specific label information
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input label id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Display label
+          schema:
+            $ref: '#/definitions/inline_response_200_6'
+        "400":
+          description: invalid input parameter
+    put:
+      tags:
+      - Labels
+      summary: Update specific label data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input label id
+        required: true
+        type: integer
+      - in: body
+        name: label
+        description: Input label data that want to update
+        required: true
+        schema:
+          $ref: '#/definitions/label_1'
+      responses:
+        "200":
+          description: Label successfully updated
+          schema:
+            $ref: '#/definitions/inline_response_200_1'
+        "400":
+          description: invalid data supplied
+    delete:
+      tags:
+      - Labels
+      summary: Delete specific label data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input label id to delete the label
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Label successfully deleted
+          schema:
+            $ref: '#/definitions/inline_response_200_7'
+        "400":
+          description: bad input parameter / invalid id supplied
+  /notes/reminders:
+    get:
+      tags:
+      - Reminders
+      summary: See all reminders
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Display all reminders
+          schema:
+            $ref: '#/definitions/inline_response_200_8'
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - Reminders
+      summary: Register new reminder
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: reminder
+        description: Create new reminder
+        required: true
+        schema:
+          $ref: '#/definitions/reminder'
+      responses:
+        "200":
+          description: Reminder successfully created
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Reminder'
+        "400":
+          description: bad input reminder data
+  /notes/reminders/{id}:
+    get:
+      tags:
+      - Reminders
+      summary: Get specific reminder information
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input reminder id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Display reminder
+          schema:
+            $ref: '#/definitions/inline_response_200_9'
+        "400":
+          description: invalid input parameter
+    put:
+      tags:
+      - Reminders
+      summary: Update specific reminder data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input reminder id
+        required: true
+        type: integer
+      - in: body
+        name: reminder
+        description: Input reminder data that want to update
+        required: true
+        schema:
+          $ref: '#/definitions/reminder_1'
+      responses:
+        "200":
+          description: Reminder successfully updated
+          schema:
+            $ref: '#/definitions/inline_response_200_1'
+        "400":
+          description: invalid data supplied
+    delete:
+      tags:
+      - Reminders
+      summary: Delete specific reminder data
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input reminder id to delete the reminder
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Reminder successfully deleted
+          schema:
+            $ref: '#/definitions/inline_response_200_10'
+        "400":
+          description: bad input parameter / invalid id supplied
+  /notes/pictures:
+    get:
+      tags:
+      - Pictures
+      summary: See all pictures
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Display all pictures data
+          schema:
+            $ref: '#/definitions/inline_response_200_11'
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - Pictures
+      summary: Adding new picture
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: picture
+        in: formData
+        description: Upload picture
+        required: true
+        type: string
+      - name: noteid
+        in: formData
+        description: Input note ID
+        required: false
+        type: integer
+      responses:
+        "200":
+          description: Picture successfully uploaded
+          schema:
+            $ref: '#/definitions/inline_response_200_12'
+        "400":
+          description: bad input picture data
+  /notes/pictures/{id}:
+    get:
+      tags:
+      - Pictures
+      summary: Get specific picture information
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input picture id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Display specific picture data
+          schema:
+            $ref: '#/definitions/inline_response_200_11'
+        "400":
+          description: invalid input parameter
+    delete:
+      tags:
+      - Pictures
+      summary: Delete specific picture
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Input picture id to delete the picture
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Picture successfully deleted
+          schema:
+            $ref: '#/definitions/inline_response_200_13'
+        "400":
+          description: bad input parameter / invalid id supplied
+  /dict/{word}:
+    get:
+      tags:
+      - Dictionary
+      summary: Get word meanings by consuming open api for dictionary
+      produces:
+      - application/json
+      parameters:
+      - name: word
+        in: path
+        description: Input word to know the meaning
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Display specific word dictionary
+          schema:
+            type: array
+            items:
+              type: string
+        "400":
+          description: invalid input parameter
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      notes:
+        $ref: '#/definitions/Note'
+      token:
+        type: string
+      createdAt:
+        type: integer
+        format: date-time
+        example: 2021-01-02T12:01:00.000+0000
+      deletedAt:
+        type: integer
+        format: date-time
+        example: 2021-01-02T12:01:00.000+0000
+  Note:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      userID:
+        type: integer
+        format: int64
+      user:
+        $ref: '#/definitions/User'
+      title:
+        type: string
+      content:
+        type: string
+      status:
+        type: string
+        example: archived
+      archived_date:
+        type: integer
+        format: date-time
+      audiofile:
+        type: string
+      labels:
+        $ref: '#/definitions/Label'
+      reminders:
+        $ref: '#/definitions/Reminder'
+      pictures:
+        $ref: '#/definitions/Picture'
+      createdAt:
+        type: integer
+        format: date-time
+      deletedAt:
+        type: integer
+        format: date-time
+  Reminder:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      reminder_name:
+        type: string
+      reminder_time:
+        type: integer
+        format: date-time
+  Label:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      notes:
+        $ref: '#/definitions/Note'
+      labeltitle:
+        type: string
+      createdAt:
+        type: integer
+        format: date-time
+      deletedAt:
+        type: integer
+        format: date-time
+  Picture:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      picture_name:
+        type: string
+      note:
+        $ref: '#/definitions/Note'
+      noteID:
+        type: integer
+        format: int64
+      createdAt:
+        type: integer
+        format: date-time
+      deletedAt:
+        type: integer
+        format: date-time
+  user:
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  user_1:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  inline_response_200:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Login success or not
+      token:
+        type: string
+  user_2:
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  inline_response_200_1:
+    type: object
+    properties:
+      message:
+        type: string
+  inline_response_200_2:
+    type: object
+    properties:
+      message:
+        type: string
+        description: User deleted success or not
+  note:
+    properties:
+      id:
+        type: integer
+      userid:
+        type: integer
+      title:
+        type: string
+      content:
+        type: string
+      status:
+        type: string
+      archive_date:
+        type: integer
+        format: date-time
+      labels:
+        type: array
+        items:
+          $ref: '#/definitions/Label'
+  inline_response_200_3:
+    type: object
+    properties:
+      message:
+        type: string
+      noteID:
+        type: integer
+  user_3:
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+      status:
+        type: string
+      archive_date:
+        type: integer
+        format: date-time
+  inline_response_200_4:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Note deleted success or not
+  inline_response_200_5:
+    type: object
+    properties:
+      id:
+        type: integer
+      labeltitle:
+        type: string
+      createdAt:
+        type: integer
+        format: date-time
+      deletedAt:
+        type: integer
+        format: date-time
+  label:
+    properties:
+      id:
+        type: integer
+      labeltitle:
+        type: string
+  inline_response_200_6:
+    type: object
+    properties:
+      id:
+        type: integer
+      labeltitle:
+        type: string
+      createdAt:
+        type: integer
+        format: date-time
+      deletedAt:
+        type: integer
+        format: date-time
+      message:
+        type: string
+  label_1:
+    properties:
+      labeltitle:
+        type: string
+  inline_response_200_7:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Label deleted success or not
+  inline_response_200_8:
+    type: object
+    properties:
+      id:
+        type: integer
+      reminder_name:
+        type: string
+      reminder_time:
+        type: integer
+        format: date-time
+      noteid:
+        type: integer
+      deletedAt:
+        type: integer
+        format: date-time
+  reminder:
+    properties:
+      id:
+        type: integer
+      reminder_name:
+        type: string
+      reminder_time:
+        type: integer
+        format: date-time
+      noteid:
+        type: integer
+  inline_response_200_9:
+    type: object
+    properties:
+      id:
+        type: integer
+      message:
+        type: string
+  reminder_1:
+    properties:
+      reminder_name:
+        type: string
+      reminder_time:
+        type: integer
+        format: date-time
+  inline_response_200_10:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Reminder deleted success or not
+  inline_response_200_11:
+    type: object
+    properties:
+      id:
+        type: integer
+      picture:
+        type: string
+      createdAt:
+        type: integer
+        format: date-time
+      noteid:
+        type: integer
+      deletedAt:
+        type: integer
+        format: date-time
+  inline_response_200_12:
+    type: object
+    properties:
+      id:
+        type: integer
+      picture:
+        type: string
+      noteid:
+        type: integer
+      createdAt:
+        type: integer
+        format: date-time
+      deletedAt:
+        type: integer
+        format: date-time
+      message:
+        type: string
+  inline_response_200_13:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Picture deleted success or not
