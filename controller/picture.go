@@ -14,7 +14,7 @@ import (
 func GetAllPicturesController(c echo.Context) error {
 	pictures := database.GetPictures()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetAllPicturesController",
+		"message": "Get All Pictures",
 		"data":    pictures,
 	})
 }
@@ -23,7 +23,7 @@ func GetPictureByIDController(c echo.Context) error {
 	id := c.Param("id")
 	picture := database.GetPictureByID(id)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetPictureByIDController",
+		"message": "Get Picture By ID",
 		"data":    picture.ID,
 	})
 }
@@ -42,7 +42,7 @@ func UpdatePictureByIDController(c echo.Context) error {
 	var picture model.Picture
 	if err := c.Bind(&picture); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreatePictureController",
+			"message": "error update picture",
 			"error":   err.Error(),
 		})
 	}
@@ -94,7 +94,7 @@ func CreatePictureController(c echo.Context) error {
 
 	newPicture = database.CreatePicture(newPicture)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "CreatePictureController",
+		"message": "Picture Successfully Created",
 		"data":    newPicture,
 	})
 }

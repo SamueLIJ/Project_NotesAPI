@@ -11,7 +11,7 @@ import (
 func GetAllRemindersController(c echo.Context) error {
 	reminders := database.GetReminders()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetAllRemindersController",
+		"message": "Get All Reminders",
 		"data":    reminders,
 	})
 }
@@ -20,7 +20,7 @@ func GetReminderByIDController(c echo.Context) error {
 	id := c.Param("id")
 	reminder := database.GetReminderByID(id)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetReminderByIDController",
+		"message": "Get Reminder By ID",
 		"data":    reminder.ID,
 	})
 }
@@ -39,7 +39,7 @@ func UpdateReminderByIDController(c echo.Context) error {
 	var reminder model.Reminder
 	if err := c.Bind(&reminder); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateReminderController",
+			"message": "error update reminder",
 			"error":   err.Error(),
 		})
 	}
@@ -53,14 +53,14 @@ func CreateReminderController(c echo.Context) error {
 	var newReminder model.Reminder
 	if err := c.Bind(&newReminder); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateReminderController",
+			"message": "error create reminder",
 			"error":   err.Error(),
 		})
 	}
 
 	newReminder = database.CreateReminder(newReminder)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "CreateReminderController",
+		"message": "Reminder Successfully Created",
 		"data":    newReminder,
 	})
 }

@@ -4,8 +4,7 @@ import (
 	"NotesAPI/config"
 	"NotesAPI/middleware"
 	"NotesAPI/route"
-	"fmt"
-	"NotesAPI/lib"
+
 	"github.com/labstack/echo"
 )
 
@@ -14,11 +13,11 @@ func main() {
 	config.InitLog()
 	config.InitMigration()
 
-	fmt.Println("Calling API...")
+	// fmt.Println("Calling API...")
 
-	result := lib.GetWord("en", "hello")
-	
-	fmt.Println(result)
+	// result := lib.GetWord("en", "hello")
+
+	// fmt.Println(result)
 	// fmt.Println(hello.Meanings[1])
 	// fmt.Println(hello.Phonetics[1])
 
@@ -51,5 +50,6 @@ func main() {
 	route.NewLabel(e)
 	route.NewReminders(e)
 	route.NewPictures(e)
+	route.Dict(e)
 	e.Start(":8080")
 }

@@ -12,7 +12,7 @@ import (
 func GetAllNotesController(c echo.Context) error {
 	notes := database.GetNotes()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetAllNotesController",
+		"message": "Get all notes",
 		"data":    notes,
 	})
 }
@@ -30,7 +30,7 @@ func GetNoteByIDController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message": "GetNoteByIDController",
+		"message": "Get note by ID",
 		"data":    notes,
 	})
 }
@@ -49,7 +49,7 @@ func UpdateNoteByIDController(c echo.Context) error {
 	var note model.Note
 	if err := c.Bind(&note); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateNoteController",
+			"message": "error update note",
 			"error":   err.Error(),
 		})
 	}
@@ -63,14 +63,14 @@ func CreateNoteController(c echo.Context) error {
 	var newNote model.Note
 	if err := c.Bind(&newNote); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateNoteController",
+			"message": "error create note",
 			"error":   err.Error(),
 		})
 	}
 
 	newNote = database.CreateNote(newNote)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "CreateNoteController",
+		"message": "Note Successfully Created",
 		"noteID":  newNote.ID,
 	})
 }

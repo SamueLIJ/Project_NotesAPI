@@ -12,19 +12,10 @@ import (
 func GetAllUsersController(c echo.Context) error {
 	users := database.GetUsers()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get all users",
+		"message": "Get All Users",
 		"data":    users,
 	})
 }
-
-// func GetUserByIDController(c echo.Context) error {
-// 	id := c.Param("id")
-// 	user := database.GetUserByID(id)
-// 	return c.JSON(http.StatusOK, echo.Map{
-// 		"message": "GetUserByIDController",
-// 		"data":    user,
-// 	})
-// }
 
 func DeleteUserByIDController(c echo.Context) error {
 	id := c.Param("id")

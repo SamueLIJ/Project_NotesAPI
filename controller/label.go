@@ -12,7 +12,7 @@ import (
 func GetAllLabelsController(c echo.Context) error {
 	labels := database.GetLabels()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetAllLabelsController",
+		"message": "Get All Labels",
 		"data":    labels,
 	})
 }
@@ -31,8 +31,7 @@ func GetLabelByIDController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status":  "login success",
-		"message": "NotebyID",
+		"message": "Get Label by ID",
 		"data":    labels,
 	})
 }
@@ -51,7 +50,7 @@ func UpdateLabelByIDController(c echo.Context) error {
 	var label model.Label
 	if err := c.Bind(&label); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateLabelController",
+			"message": "error update label",
 			"error":   err.Error(),
 		})
 	}
@@ -65,14 +64,14 @@ func CreateLabelController(c echo.Context) error {
 	var newLabel model.Label
 	if err := c.Bind(&newLabel); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateLabelController",
+			"message": "error create label",
 			"error":   err.Error(),
 		})
 	}
 
 	newLabel = database.CreateLabel(newLabel)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "CreateLabelController",
+		"message": "Label Successfully Created",
 		"data":    newLabel,
 	})
 }
