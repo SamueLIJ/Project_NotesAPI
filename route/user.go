@@ -8,7 +8,6 @@ import (
 )
 
 func NewUser(e *echo.Echo) {
-
 	e.GET("/users", controller.GetAllUsersController)
 	e.POST("/users/login", controller.LoginUserController)
 	e.POST("/users", controller.CreateUserController)
