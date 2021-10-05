@@ -7,10 +7,12 @@ import (
 	"net/http"
 )
 
-type Phonetic struct {
+type Phonetic2 struct {
 	Text  string `json:"text"`
 	Audio string `json:"audio"`
 }
+
+
 
 type Meaning2 struct{
 	Definition string `json:"definition"`
@@ -26,8 +28,8 @@ type Meaning struct {
 type Dictionary struct {
 	Word      string     `json:"word"`
 	Phonetic  string     `json:"phonetic"`
-	Phonetics []Phonetic `json:"phonetics"`
-	Meaning string `json:"meaning"`
+	Phonetics []Phonetic2 `json:"phonetics"`
+	Meaning string `json:"meaning,omitempty"`
 	Meanings []Meaning `json:"meanings"`
 }
 

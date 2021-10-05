@@ -9,11 +9,11 @@ import (
 
 func GetWordDefinitionController(c echo.Context) error {
 	words := c.Param("word")
-	
+
 	result := lib.GetWord("en", words)
-	
+
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get word",
+		"message":    "Word Gotten",
 		"dictionary": result,
 	})
 }
