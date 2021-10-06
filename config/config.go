@@ -39,7 +39,7 @@ func InitLog() {
 func InitDB() {
 	var err error
 	//                              username:password@tcp(host:port)/nama_database
-	DB, err = gorm.Open(mysql.Open("root:samuel@tcp(127.0.0.1:3306)/notesapi?parseTime=True"))
+	DB, err = gorm.Open(mysql.Open("root:root@tcp(127.0.0.1:3306)/notesapi?parseTime=True"))
 	if err != nil {
 		panic(err)
 	} else {

@@ -8,9 +8,9 @@ import (
 )
 
 func NewNotes(e *echo.Echo) {
-	e.GET("/notes", controller.GetAllNotesController)
-	e.POST("/notes", controller.CreateNoteController)
+	e.GET("/notes", controller.GetAllNotesController, middleware.AuthJWT)
+	e.POST("/notes", controller.CreateNoteController, middleware.AuthJWT)
 	e.GET("/notes/:id", controller.GetNoteByIDController, middleware.AuthJWT)
-	e.DELETE("/notes/:id", controller.DeleteNoteByIDController)
-	e.PUT("/notes/:id", controller.UpdateNoteByIDController)
+	e.DELETE("/notes/:id", controller.DeleteNoteByIDController, middleware.AuthJWT)
+	e.PUT("/notes/:id", controller.UpdateNoteByIDController, middleware.AuthJWT)
 }

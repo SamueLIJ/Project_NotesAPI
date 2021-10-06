@@ -55,7 +55,7 @@ func CreateUserController(c echo.Context) error {
 	newUser.Password = ""
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "User successfully created",
-		"data":    newUser,
+		// "data":    newUser,
 	})
 
 }
