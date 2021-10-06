@@ -66,7 +66,7 @@ func AuthJWT(hf echo.HandlerFunc) echo.HandlerFunc {
 			return []byte(key), nil
 		})
 		if err != nil && !token.Valid {
-			return c.String(http.StatusForbidden, "Token Salah")
+			return c.String(http.StatusForbidden, "Wrong Token")
 		}
 
 		c.Set("email", claims["userId"])

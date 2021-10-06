@@ -3,13 +3,13 @@ package database
 import (
 	"NotesAPI/config"
 	"NotesAPI/model"
+	"fmt"
 	"time"
 )
 
 func GetLabels() []model.Label {
 	var Labels []model.Label
 
-	//todo tambahin where user id
 	config.DB.Where("deleted_at is null").Find(&Labels)
 	return Labels
 }
@@ -24,9 +24,10 @@ func GetLabelsByID(labelId int) (interface{}, error) {
 }
 
 func CreateLabel(label model.Label) model.Label {
-	config.DB.Create(&label)
+	err:= config.DB.Create(&label).Error
+	fmt.Println(err)
 	for _, note := range label.Notes {
-		config.DB.Raw("insert into notelabels values(?,?)", note.ID)
+		config.DB.Raw("insert into notelabels values(?,?)", note.ID, label.ID)
 	}
 	return label
 }

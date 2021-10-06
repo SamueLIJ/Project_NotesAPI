@@ -11,7 +11,7 @@ import (
 func GetAllRemindersController(c echo.Context) error {
 	reminders := database.GetReminders()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get All Reminders",
+		"message": "Success get all reminders",
 		"data":    reminders,
 	})
 }
@@ -20,7 +20,7 @@ func GetReminderByIDController(c echo.Context) error {
 	id := c.Param("id")
 	reminder := database.GetReminderByID(id)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get Reminder By ID",
+		"message": "Success get reminder by id",
 		"data":    reminder.ID,
 	})
 }

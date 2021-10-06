@@ -12,7 +12,7 @@ import (
 func GetAllLabelsController(c echo.Context) error {
 	labels := database.GetLabels()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get All Labels",
+		"message": "Success get all labels",
 		"data":    labels,
 	})
 }
@@ -31,7 +31,7 @@ func GetLabelByIDController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Get Label by ID",
+		"message": "Success get by label id",
 		"data":    labels,
 	})
 }

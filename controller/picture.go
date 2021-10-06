@@ -14,7 +14,7 @@ import (
 func GetAllPicturesController(c echo.Context) error {
 	pictures := database.GetPictures()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get All Pictures",
+		"message": "Success get all pictures",
 		"data":    pictures,
 	})
 }
@@ -23,7 +23,7 @@ func GetPictureByIDController(c echo.Context) error {
 	id := c.Param("id")
 	picture := database.GetPictureByID(id)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get Picture By ID",
+		"message": "Success get picture By ID",
 		"data":    picture.ID,
 	})
 }
@@ -65,11 +65,11 @@ func CreatePictureController(c echo.Context) error {
 	defer src.Close()
 
 	//destination
-	dst, err := os.Create(file.Filename)
-	if err != nil {
-		return err
-	}
-	defer dst.Close()
+	// dst, err := os.Create(file.Filename)
+	// if err != nil {
+	// 	return err
+	// }
+	// defer dst.Close()
 
 	// this is path which  we want to store the file
 	f, err := os.OpenFile("pictures/"+file.Filename, os.O_WRONLY|os.O_CREATE, 0666)
@@ -78,7 +78,7 @@ func CreatePictureController(c echo.Context) error {
 	}
 	defer f.Close()
 
-	if _, err = io.Copy(dst, src); err != nil {
+	if _, err = io.Copy(f, src); err != nil {
 		return err
 	}
 

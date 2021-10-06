@@ -12,7 +12,7 @@ import (
 func GetAllNotesController(c echo.Context) error {
 	notes := database.GetNotes()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get all notes",
+		"message": "Success get all notes",
 		"data":    notes,
 	})
 }
@@ -30,7 +30,7 @@ func GetNoteByIDController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Get note by ID",
+		"message": "Success get note by ID",
 		"data":    notes,
 	})
 }

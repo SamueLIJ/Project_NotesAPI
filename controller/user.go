@@ -12,7 +12,7 @@ import (
 func GetAllUsersController(c echo.Context) error {
 	users := database.GetUsers()
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "Get All Users",
+		"message": "Success get all users",
 		"data":    users,
 	})
 }
@@ -55,7 +55,6 @@ func CreateUserController(c echo.Context) error {
 	newUser.Password = ""
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "User successfully created",
-		// "data":    newUser,
 	})
 
 }
@@ -111,8 +110,9 @@ func GetUserByIDController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "Login Success",
-		"user":   users,
+		"status":  "Login Success",
+		"message": "Success get user by id",
+		"user":    users,
 	})
 
 }
