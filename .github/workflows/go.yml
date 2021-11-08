@@ -15,8 +15,8 @@ jobs:
       with:
         go-version: 1.17
 
-    - name: Test
-      run: go test -v ./...
+#     - name: Test
+#       run: go test -v ./...
       
     - name: Login to DockerHub
       uses: docker/login-action@v1
